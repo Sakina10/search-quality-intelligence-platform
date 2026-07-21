@@ -1,52 +1,60 @@
 # Google Search Quality Intelligence Platform: Product & Engineering Roadmap
 
-This document outlines the milestones and releases scheduled to evolve the platform from initial scaffolding to a public, production-stable Release v1.0.
+This document outlines the versioned releases and milestones scheduled to evolve the platform.
 
 ---
 
-## 1. Roadmap Overview
+## 1. Release Strategy Overview
 
 ```
- v0.1.0 ────────► v0.2.0 ────────► v0.4.0 ────────► v0.6.0 ────────► v0.8.0 ────────► v1.0.0
-Planning       OS Scaffolding    Data Validation    Analytics Eng    ML Platform     Stable Production
+ v1.0.0 ────────► v1.1.0 ────────► v1.2.0 ────────► v2.0.0 ────────► v2.5.0 ────────► v3.0.0
+Core Platform    Community DX    Cloud Edition    Enterprise Scale  AI Integrations  Open Framework
 ```
 
 ---
 
-## 2. Release Schedules
+## 2. Release Roadmaps
 
-### Release 0.2: Open Source Repository Scaffolding (Active)
-*   **Milestone 1**: Create standard community templates (`CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `ROADMAP.md`, `CHANGELOG.md`, Issue/PR forms). (In Progress)
-*   **Milestone 2**: Configure CI Pipeline Automation using GitHub Actions to validate formatting (Black), lints (Ruff), types (Mypy), and tests.
+### Version 1.0: Core Platform (Completed)
+*   **Goal**: Deliver a stable, production-ready analytics and MLOps serving platform.
+*   **Key Capabilities**:
+    *   Synthetic search event generator and Great Expectations schema validator.
+    *   DuckDB warehouse ingestion and dbt core dimension/fact modeling.
+    *   Feast Feature Store sqlite registry online materialization index.
+    *   XGBoost training pipeline with Optuna hyperparameter sweeps.
+    *   SHAP explainers, Isolation Forest anomaly classifier, and FastAPI serving endpoints.
+    *   Multi-page Streamlit operations dashboards and Apache Airflow pipelines.
 
-### Release 0.3: Synthetic Data Platform
-*   **Milestone 3**: Core Search Log Generator Script (Vectorized NumPy calculations day-by-day).
-*   **Milestone 4**: Million-Row Scalability Test & Performance profiling.
-*   **Milestone 5**: 50-Million-Row scale generation profile benchmarking.
+### Version 1.1: Community Edition (Q3 2026)
+*   **Goal**: Improve developer onboarding and user experiences.
+*   **Target Improvements**:
+    *   Platform Command Line Interface (CLI) to trigger generation and ingestion tasks.
+    *   Interactive tutorials and setup configuration wizard widgets.
+    *   Good first issues templates, more examples, and custom labels.
 
-### Release 0.4: Data Validation Platform
-*   **Milestone 6**: Initialize Great Expectations suite configurations, validations metrics, schema boundary assertions, and outlier detection logic.
+### Version 1.2: Cloud Edition (Q4 2026)
+*   **Goal**: Support native deployment on major cloud providers.
+*   **Target Improvements**:
+    *   AWS, Google Cloud (GCP), and Azure deployment blueprints.
+    *   Terraform Infrastructure-as-Code (IaC) files.
+    *   Cloud storage connections (S3/GCS) and secret managers integration.
 
-### Release 0.5: Data Warehouse
-*   **Milestone 7**: Create PostgreSQL relational warehouse DDL scripts, index optimizations, and partitions configuration rules.
-*   **Milestone 8**: Build snappy compressed Parquet database bulk loading ingestion scripts.
+### Version 2.0: Enterprise Platform (2027)
+*   **Goal**: Expand into a high-throughput, enterprise-grade streaming analytics engine.
+*   **Target Improvements**:
+    *   Kafka/Flink streaming pipeline integration for real-time ingest.
+    *   Distributed processing (Apache Spark).
+    *   Role-Based Access Control (RBAC) and OAuth2 security authentication.
 
-### Release 0.6: dbt Analytics Engineering
-*   **Milestone 9**: Configure dbt project files, staging layers, and dbt test validations.
-*   **Milestone 10**: Build dbt dimensional modeling (Dim/Fact tables layout).
-*   **Milestone 11**: Aggregated metrics calculation (dwell times, pogo-sticking rates, SQS benchmarks).
+### Version 2.5: AI Platform (2027)
+*   **Goal**: Introduce intelligent automation and LLM-powered capabilities.
+*   **Target Improvements**:
+    *   Natural language query interfaces.
+    *   AI-generated search quality anomaly explanations.
+    *   AutoML experimentations tracking.
 
-### Release 0.7: Feature Store Integration
-*   **Milestone 12**: Feast Feature Store entity definition, feature views registry, and historical data retrieval interfaces.
-
-### Release 0.8: Machine Learning Platform
-*   **Milestone 13**: ML pipeline training module, Optuna hyperparameter checks, and evaluation scripts (MLflow integration).
-*   **Milestone 14**: Model Interpretability reports using SHAP.
-*   **Milestone 15**: Real-time prediction serving API using FastAPI.
-
-### Release 0.9: Serving & Monitors
-*   **Milestone 16**: Multi-page Streamlit portal dashboard visualizations.
-*   **Milestone 17**: Apache Airflow orchestration DAG schedules setup.
-
-### Release 1.0: Public Production Stable Release
-*   **Milestone 18**: Deploy guides, Kubernetes deployment specifications, and public documentation site.
+### Version 3.0: Open Analytics Framework (2028)
+*   **Goal**: Transform the codebase into a fully reusable, modular analytics SDK.
+*   **Target Improvements**:
+    *   Custom data connectors SDK.
+    *   Plugin/marketplace directory for community-developed metrics extensions.
