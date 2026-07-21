@@ -1,0 +1,81 @@
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+
+# Enable Pyflakes (F), Pycodestyle (E/W), Flake8-bugbear (B), Pep8-naming (N), Flake8-quotes (Q), isort (I)
+select = ["F", "E", "W", "B", "N", "Q", "I"]
+ignore = []
+
+# Exclude common cache directories
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    "venv",
+    ".venv",
+    "build",
+    "dist"
+]
+
+[tool.ruff.isort]
+known-first-party = ["src"]
+combine-as-imports = true
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+
+# Ignore missing type stubs for untyped third-party libraries
+[[tool.mypy.overrides]]
+module = [
+    "pandas.*",
+    "numpy.*",
+    "pyarrow.*",
+    "sqlalchemy.*",
+    "psycopg2.*",
+    "faker.*",
+    "xgboost.*",
+    "lightgbm.*",
+    "optuna.*",
+    "shap.*",
+    "evidently.*",
+    "feast.*",
+    "great_expectations.*",
+    "airflow.*"
+]
+ignore_missing_imports = true
+
+[tool.pyright]
+include = ["src", "tests", "scripts"]
+extraPaths = ["."]
+

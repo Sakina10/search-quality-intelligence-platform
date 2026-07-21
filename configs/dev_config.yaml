@@ -1,0 +1,14 @@
+# Development Environment Overrides
+
+env: "dev"
+debug: true
+
+logging:
+  level: "DEBUG"
+  log_to_file: false
+
+database:
+  host: "localhost" # Override to connect directly from host machine outside docker
+
+data_generation:
+  total_rows: 10000 # Generate a smaller dataset for faster development loops

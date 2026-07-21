@@ -1,0 +1,70 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+bin/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Project specific exclusions
+data/**/*.parquet
+data/**/*.csv
+data/**/*.db
+data/**/*.db-journal
+logs/**/*.log
+.dbt/
+target/
+dbt_modules/
+dbt_packages/
+logs/
+!docs/
+
+# Local databases & state
+*.sqlite
+*.db
+feast_registry.db
+.feast/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pre-commit/
+
+# OS files
+.DS_Store
+Thumbs.db

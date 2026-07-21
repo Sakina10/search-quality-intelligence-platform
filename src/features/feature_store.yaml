@@ -1,0 +1,6 @@
+project: search_quality
+registry: ../../data/features/registry.db
+provider: local
+online_store:
+  type: sqlite
+  path: ../../data/features/online_store.db

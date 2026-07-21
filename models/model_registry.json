@@ -1,0 +1,33 @@
+{
+  "active_models": {
+    "sqs_predictor": {
+      "version": "1.0.0",
+      "model_path": "models/sqs_predictor.pkl",
+      "framework": "XGBoost",
+      "metrics": {
+        "validation_mae": 0.1245,
+        "validation_r2": 0.9984
+      },
+      "shap_global_importances": {
+        "position": 2.784369707107544,
+        "latency_ms": 1.7850590944290161,
+        "user_pogo_sticking_count": 1.175897240638733,
+        "query_reformulation_rate": 1.1356089115142822,
+        "user_7d_ctr": 0.17983347177505493,
+        "user_30d_avg_dwell_time": 0.031345997005701065,
+        "page_speed_score": 0.02794014848768711,
+        "bounce_rate": 0.01882879063487053,
+        "query_avg_ctr": 0.016604268923401833,
+        "query_95p_latency_ms": 0.008377118967473507
+      },
+      "deployed_at": "2026-07-21T16:11:40.052064Z"
+    },
+    "anomaly_detector": {
+      "version": "1.0.0",
+      "model_path": "models/anomaly_detector.pkl",
+      "framework": "IsolationForest",
+      "contamination": 0.1,
+      "deployed_at": "2026-07-21T16:11:40.052064Z"
+    }
+  }
+}

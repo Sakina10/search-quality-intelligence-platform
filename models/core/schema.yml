@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: dim_geography
+    description: "Conformed geographic location dimensions matching unique location properties."
+    columns:
+      - name: geo_key
+        description: "Cryptographic surrogate key generated from country, region, and language."
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_systems
+    description: "Technical configuration dimensions detailing devices, browser names, and platforms."
+    columns:
+      - name: system_key
+        description: "Cryptographic surrogate key generated from device type, browser, and os name."
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_queries
+    description: "Search queries dimension classifications and intent classes classifications."
+    columns:
+      - name: query_key
+        description: "Cryptographic surrogate key generated from query string, category, and intent."
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_users
+    description: "User profile dimensions tracking demographics and subscription segments over time (SCD Type 2)."
+    columns:
+      - name: user_key
+        description: "Cryptographic surrogate key generated from user id and active record timestamp."
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_search_events
+    description: "Search events log fact records detailing user queries actions, latency, and scoring metrics."
+    columns:
+      - name: event_id
+        description: "Primary key identifier of individual search events logs."
+        tests:
+          - unique
+          - not_null
+      - name: user_key
+        description: "Foreign key reference linking to dim_users."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: user_key
+      - name: query_key
+        description: "Foreign key reference linking to dim_queries."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_queries')
+              field: query_key
+      - name: system_key
+        description: "Foreign key reference linking to dim_systems."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_systems')
+              field: system_key
+      - name: geo_key
+        description: "Foreign key reference linking to dim_geography."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_geography')
+              field: geo_key

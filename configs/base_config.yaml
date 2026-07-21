@@ -1,0 +1,50 @@
+# Base Configurations for Search Quality Intelligence Platform
+
+# Environment settings
+env: "prod"
+debug: false
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  log_to_file: true
+  log_path: "logs/platform.log"
+
+# Database Connection Settings
+database:
+  host: "db"
+  port: 5432
+  name: "search_quality"
+  user: "postgres_admin"
+  password: "admin_password_secure_123"
+  pool_size: 20
+  max_overflow: 10
+
+# API Server Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  timeout_seconds: 60
+
+# Data Generation Engine Settings
+data_generation:
+  total_rows: 1000000
+  batch_size: 200000
+  random_seed: 42
+  start_date: "2026-06-01"
+  end_date: "2026-07-20"
+  anomaly_simulation: true
+  anomaly_date: "2026-07-15"
+  anomaly_country: "United States"
+  anomaly_device: "Mobile"
+  anomaly_latency_multiplier: 4.5
+
+# Model Hyperparameters and Paths
+model:
+  registry_path: "models/model_registry.json"
+  sqs_predictor_version: "1.0.0"
+  anomaly_detector_version: "1.0.0"
+  test_split_ratio: 0.2
+  time_series_split_folds: 5

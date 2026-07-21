@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-07-20T13:19:15Z",
+  "target_rows": 1000000,
+  "duration_seconds": 32.9556,
+  "throughput_rows_per_second": 30343.84,
+  "initial_memory_mb": 108.95,
+  "peak_memory_mb": 187.02,
+  "memory_growth_mb": 78.06,
+  "output_directory": "/Users/jerry/Desktop/Google Search Quality Intelligence Platform/data/search_events"
+}

@@ -1,0 +1,56 @@
+{
+  "timestamp": "2026-07-21T08:09:48Z",
+  "empirical_steps": [
+    {
+      "rows": 100000,
+      "duration_seconds": 4.9538,
+      "throughput_rows_sec": 20186.52,
+      "peak_memory_mb": 185.27,
+      "memory_growth_mb": 70.75,
+      "disk_size_mb": 7.7688
+    },
+    {
+      "rows": 250000,
+      "duration_seconds": 9.1702,
+      "throughput_rows_sec": 27262.17,
+      "peak_memory_mb": 223.19,
+      "memory_growth_mb": 37.92,
+      "disk_size_mb": 17.1605
+    },
+    {
+      "rows": 500000,
+      "duration_seconds": 15.8307,
+      "throughput_rows_sec": 31584.16,
+      "peak_memory_mb": 255.67,
+      "memory_growth_mb": 32.48,
+      "disk_size_mb": 31.9185
+    },
+    {
+      "rows": 1000000,
+      "duration_seconds": 29.6371,
+      "throughput_rows_sec": 33741.53,
+      "peak_memory_mb": 336.73,
+      "memory_growth_mb": 81.06,
+      "disk_size_mb": 59.605
+    },
+    {
+      "rows": 2000000,
+      "duration_seconds": 57.489,
+      "throughput_rows_sec": 34789.26,
+      "peak_memory_mb": 471.09,
+      "memory_growth_mb": 135.36,
+      "disk_size_mb": 115.8603
+    }
+  ],
+  "linear_coefficients": {
+    "time_seconds_per_row": 2.9181471113198685e-05,
+    "disk_mb_per_row": 5.868517707844058e-05
+  },
+  "projections_50m": {
+    "duration_seconds": 1459.07,
+    "duration_minutes": 24.32,
+    "disk_size_mb": 2934.26,
+    "disk_size_gb": 2.8655,
+    "peak_memory_mb": 294.39
+  }
+}

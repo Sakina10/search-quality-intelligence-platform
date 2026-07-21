@@ -1,0 +1,26 @@
+# dbt Connection Profiles
+# Google Search Quality Intelligence Platform
+
+search_quality_profile:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: postgres_admin
+      password: admin_password_secure_123
+      port: 5432
+      dbname: search_quality
+      schema: public
+      threads: 4
+      keepalives_idle: 0
+    prod:
+      type: postgres
+      host: db
+      user: postgres_admin
+      password: admin_password_secure_123
+      port: 5432
+      dbname: search_quality
+      schema: public
+      threads: 8
+      keepalives_idle: 0

@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # Database Service (Staging Data Warehouse)
+  db:
+    image: postgres:15-alpine
+    container_name: search_quality_db
+    environment:
+      POSTGRES_DB: search_quality
+      POSTGRES_USER: postgres_admin
+      POSTGRES_PASSWORD: admin_password_secure_123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres_admin -d search_quality"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Model Serving API Endpoint (FastAPI)
+  api:
+    build:
+      context: .
+      target: serving
+    container_name: search_quality_api
+    environment:
+      - ENV=dev
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=search_quality
+      - DB_USER=postgres_admin
+      - DB_PASSWORD=admin_password_secure_123
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./models:/app/models
+
+  # Visualization Dashboard (Streamlit)
+  dashboard:
+    build:
+      context: .
+      target: dashboard
+    container_name: search_quality_dashboard
+    environment:
+      - ENV=dev
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=search_quality
+      - DB_USER=postgres_admin
+      - DB_PASSWORD=admin_password_secure_123
+      - API_URL=http://api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      db:
+        condition: service_healthy
+      api:
+        condition: service_started
+
+volumes:
+  postgres_data:
+    driver: local
