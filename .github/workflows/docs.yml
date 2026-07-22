@@ -19,9 +19,14 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install MkDocs & Material Theme
+      - name: Install MkDocs & Material Theme Dependencies
         run: |
-          pip install mkdocs mkdocs-material pymdown-extensions
+          python -m pip install --upgrade pip
+          pip install "mkdocs>=1.6.0" "mkdocs-material>=9.5.0" "pymdown-extensions>=10.7.0"
+
+      - name: Validate MkDocs Build
+        run: |
+          mkdocs build
 
       - name: Build and Deploy to GitHub Pages
         run: |

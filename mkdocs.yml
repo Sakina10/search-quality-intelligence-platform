@@ -1,10 +1,10 @@
-site_name: Google Search Quality Intelligence Platform
-site_url: https://google-search-quality.github.io/intelligence-platform/
+site_name: Search Quality Intelligence Platform (SQIP)
+site_url: https://YOUR_USERNAME.github.io/sqip/
 site_description: Production-grade analytics engineering and MLOps platform for search quality degradation detection.
-site_author: Release Engineering Team
+site_author: SQIP Release Engineering Team
 
-repo_name: google-search-quality/intelligence-platform
-repo_url: https://github.com/google-search-quality/intelligence-platform
+repo_name: YOUR_USERNAME/sqip
+repo_url: https://github.com/YOUR_USERNAME/sqip
 
 theme:
   name: material
@@ -30,28 +30,37 @@ theme:
     - content.code.copy
 
 markdown_extensions:
-  - pymdownx.highlight:
-      anchor_linenums: true
+  - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.def_mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - tables
   - admonition
   - attr_list
 
 nav:
   - Overview: index.md
-  - Architecture: architecture/system_design.md
-  - PRD & Requirements: prd/prd.md
+  - Architecture:
+      - System Design: architecture/system_design.md
+      - Data Model: architecture/data_model.md
+      - MLOps Architecture: architecture/mlops_design.md
+      - Monitoring & Dashboards: architecture/monitoring_and_viz_design.md
+  - Data Engineering:
+      - Log Generation Design: data/generation_design.md
+  - PRD & Product:
+      - Requirements Document: prd/prd.md
+      - Personas & Stakeholders: prd/personas_and_stakeholders.md
+  - Governance & Agile:
+      - Risk Register & Dependencies: agile/governance.md
+      - Product Backlog: agile/backlog.md
   - Portfolio & Case Study:
       - Executive Summary: portfolio/executive_summary.md
       - Architecture Case Study: portfolio/architecture_case_study.md
       - Interview Kit & Trade-offs: portfolio/interview_kit.md
       - One-Page Technical Handout: portfolio/one_page_summary.md
   - Developer Guide:
-      - Quickstart: index.md#operational-quickstart
-      - Contributing: https://github.com/google-search-quality/intelligence-platform/blob/main/CONTRIBUTING.md
+      - Contributing: https://github.com/YOUR_USERNAME/sqip/blob/main/CONTRIBUTING.md

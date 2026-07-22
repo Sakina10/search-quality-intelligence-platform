@@ -7,8 +7,10 @@ This document defines the project governance guidelines, tracks critical risks, 
 ## 1. Risk Register
 
 We assess project risks using the standard risk matrix formula:
-$$\text{Risk Score} = \text{Likelihood} \times \text{Impact}$$
-Where Likelihood and Impact are scored on a scale of 1 (Low) to 5 (Critical). Any score $\ge 12$ is categorized as a **High Priority Risk** requiring a formalized mitigation and contingency plan.
+
+> **Risk Score = Likelihood × Impact**
+
+Where Likelihood and Impact are scored on a scale of 1 (Low) to 5 (Critical). Any score ≥ 12 is categorized as a **High Priority Risk** requiring a formalized mitigation and contingency plan.
 
 | Risk ID | Risk Description | Likelihood (1-5) | Impact (1-5) | Score (1-25) | Mitigation Plan (Proactive) | Contingency Plan (Reactive) | Owner |
 | :--- | :--- | :---: | :---: | :---: | :--- | :--- | :--- |
