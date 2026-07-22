@@ -70,3 +70,6 @@ feast_registry.db
 # OS files
 .DS_Store
 Thumbs.db
+
+# Documentation build output
+site/
