@@ -30,7 +30,57 @@ PREDICTOR_PATH = os.path.join(MODELS_DIR, "sqs_predictor.pkl")
 ANOMALY_PATH = os.path.join(MODELS_DIR, "anomaly_detector.pkl")
 FEATURE_STORE_DIR = os.path.join(BASE_DIR, "src", "features")
 
-# Global models holders
+
+class ModelRegistry:
+    """Dependency container holding model binaries and online feature store client."""
+
+    def __init__(self) -> None:
+        self.predictor: Optional[Any] = None
+        self.anomaly_detector: Optional[Any] = None
+        self.feast_store: Optional[Any] = None
+
+    def initialize(self) -> None:
+        """Loads XGBoost predictor, Isolation Forest model, and Feast store instance."""
+        logger.info("Initializing serving API dependencies...")
+        try:
+            if os.path.exists(PREDICTOR_PATH):
+                with open(PREDICTOR_PATH, "rb") as f:
+                    self.predictor = pickle.load(f)
+                logger.info("XGBoost predictor model loaded successfully.")
+            else:
+                logger.warning(f"Predictor binary not found at: {PREDICTOR_PATH}")
+
+            if os.path.exists(ANOMALY_PATH):
+                with open(ANOMALY_PATH, "rb") as f:
+                    self.anomaly_detector = pickle.load(f)
+                logger.info(
+                    "Isolation Forest anomaly detector model loaded successfully."
+                )
+            else:
+                logger.warning(f"Anomaly detector binary not found at: {ANOMALY_PATH}")
+
+            try:
+                from feast import FeatureStore
+
+                if os.path.exists(
+                    os.path.join(FEATURE_STORE_DIR, "feature_store.yaml")
+                ):
+                    self.feast_store = FeatureStore(repo_path=FEATURE_STORE_DIR)
+                    logger.info("Feast Feature Store client connected successfully.")
+                else:
+                    logger.warning(
+                        f"Feast feature_store.yaml not found at {FEATURE_STORE_DIR}"
+                    )
+            except Exception as fe:
+                logger.warning(f"Feast feature store initialization skipped: {str(fe)}")
+
+        except Exception as e:
+            logger.error(f"Error initializing serving API dependencies: {str(e)}")
+
+
+model_registry = ModelRegistry()
+
+# Backwards compatible alias properties
 predictor: Optional[Any] = None
 anomaly_detector: Optional[Any] = None
 feast_store: Optional[Any] = None
@@ -38,43 +88,13 @@ feast_store: Optional[Any] = None
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
-    """Loads predictor regressor, isolation forest anomaly model, and Feast store instance."""
+    """Lifespan manager executing dependency loading and resource cleanup."""
     global predictor, anomaly_detector, feast_store
-
-    logger.info("Initializing serving API dependencies...")
-    try:
-        # Load XGBoost SQS model
-        if os.path.exists(PREDICTOR_PATH):
-            with open(PREDICTOR_PATH, "rb") as f:
-                predictor = pickle.load(f)
-            logger.info("XGBoost predictor model loaded successfully.")
-        else:
-            logger.warning(f"Predictor binary not found at: {PREDICTOR_PATH}")
-
-        # Load Anomaly Detector
-        if os.path.exists(ANOMALY_PATH):
-            with open(ANOMALY_PATH, "rb") as f:
-                anomaly_detector = pickle.load(f)
-            logger.info("Isolation Forest anomaly detector model loaded successfully.")
-        else:
-            logger.warning(f"Anomaly detector binary not found at: {ANOMALY_PATH}")
-
-        # Initialize Feast Online Store client
-        try:
-            from feast import FeatureStore
-
-            if os.path.exists(os.path.join(FEATURE_STORE_DIR, "feature_store.yaml")):
-                feast_store = FeatureStore(repo_path=FEATURE_STORE_DIR)
-                logger.info("Feast Feature Store client connected successfully.")
-            else:
-                logger.warning(
-                    f"Feast feature_store.yaml not found at {FEATURE_STORE_DIR}"
-                )
-        except Exception as fe:
-            logger.warning(f"Feast feature store initialization skipped: {str(fe)}")
-
-    except Exception as e:
-        logger.error(f"Error initializing serving API dependencies: {str(e)}")
+    model_registry.initialize()
+    predictor = model_registry.predictor
+    anomaly_detector = model_registry.anomaly_detector
+    feast_store = model_registry.feast_store
+    app.state.registry = model_registry
 
     yield
 
@@ -169,6 +189,11 @@ def predict_quality(request: PredictRequest) -> Dict[str, Any]:
             online_response = {}
 
         feast_retrieval_ms = (time.perf_counter() - start_feast) * 1000.0
+    else:
+        logger.warning(
+            "Feast online feature store unavailable; applying cold-start "
+            "default historical features."
+        )
 
     # Extract feature values, filling defaults for cold starts
     user_7d_ctr = online_response.get("user_7d_ctr", [None])[0]

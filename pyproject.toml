@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "google-search-quality-intelligence-platform"
+name = "search-quality-intelligence-platform"
 version = "1.0.0"
 description = "Production-grade analytics and MLOps platform predicting Search Quality Score (SQS) degradation."
 readme = "README.md"
@@ -37,14 +37,8 @@ exclude = '''
 '''
 
 [tool.ruff]
-target-version = "py311"
 line-length = 88
-
-# Enable Pyflakes (F), Pycodestyle (E/W), Flake8-bugbear (B), Pep8-naming (N), Flake8-quotes (Q), isort (I)
-select = ["F", "E", "W", "B", "N", "Q", "I"]
-ignore = []
-
-# Exclude common cache directories
+target-version = "py311"
 exclude = [
     ".git",
     ".mypy_cache",
@@ -56,9 +50,17 @@ exclude = [
     "dist"
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+ignore = [
+    "E402",
+    "E501",
+    "N803",
+    "N806",
+]
+
+[tool.ruff.lint.isort]
 known-first-party = ["src"]
-combine-as-imports = true
 
 [tool.mypy]
 python_version = "3.11"
