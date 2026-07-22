@@ -14,7 +14,7 @@ from src.config.config_loader import settings
 def configure_logger() -> logging.Logger:
     """Configures and returns the central logger instance (Singleton configuration)."""
     logger = logging.getLogger("SearchQualityPlatform")
-    
+
     # Avoid duplicate handlers if logger is re-initialized
     if logger.handlers:
         return logger
@@ -36,7 +36,7 @@ def configure_logger() -> logging.Logger:
     if settings.logging.log_to_file:
         log_path = settings.logging.log_path
         log_dir = os.path.dirname(log_path)
-        
+
         # Ensure log target directory exists
         if log_dir and not os.path.exists(log_dir):
             try:
@@ -44,13 +44,15 @@ def configure_logger() -> logging.Logger:
             except Exception as e:
                 logger.error(f"Failed to create logs directory: {log_dir}. Error: {e}")
                 return logger
-                
+
         try:
             file_handler = logging.FileHandler(log_path, encoding="utf-8")
             file_handler.setFormatter(formatter)
             logger.addHandler(file_handler)
         except Exception as e:
-            logger.error(f"Failed to bind file logging handler to: {log_path}. Error: {e}")
+            logger.error(
+                f"Failed to bind file logging handler to: {log_path}. Error: {e}"
+            )
 
     return logger
 

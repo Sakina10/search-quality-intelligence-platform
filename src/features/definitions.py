@@ -16,36 +16,40 @@ user_entity = Entity(
     name="user_id_masked",
     value_type=ValueType.STRING,
     join_keys=["user_id_masked"],
-    description="Unique user identification code (hashed)."
+    description="Unique user identification code (hashed).",
 )
 
 query_entity = Entity(
     name="query_key",
     value_type=ValueType.STRING,
     join_keys=["query_key"],
-    description="Surrogate identifier of a unique query classification."
+    description="Surrogate identifier of a unique query classification.",
 )
 
 import os
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.dirname(CURRENT_DIR))
-USER_PARQUET_PATH = os.path.join(PROJECT_ROOT, "data", "features", "user_features.parquet")
-QUERY_PARQUET_PATH = os.path.join(PROJECT_ROOT, "data", "features", "query_features.parquet")
+USER_PARQUET_PATH = os.path.join(
+    PROJECT_ROOT, "data", "features", "user_features.parquet"
+)
+QUERY_PARQUET_PATH = os.path.join(
+    PROJECT_ROOT, "data", "features", "query_features.parquet"
+)
 
 # 2. Define FileSources pointing to conformed Parquet files
 user_source = FileSource(
     name="user_features_source",
     path=USER_PARQUET_PATH,
     event_timestamp_column="event_timestamp",
-    created_timestamp_column=None
+    created_timestamp_column=None,
 )
 
 query_source = FileSource(
     name="query_features_source",
     path=QUERY_PARQUET_PATH,
     event_timestamp_column="event_timestamp",
-    created_timestamp_column=None
+    created_timestamp_column=None,
 )
 
 # 3. Define Feature Views
@@ -60,7 +64,7 @@ user_feature_view = FeatureView(
     ],
     online=True,
     source=user_source,
-    tags={"team": "search_quality_mlops"}
+    tags={"team": "search_quality_mlops"},
 )
 
 query_feature_view = FeatureView(
@@ -74,5 +78,5 @@ query_feature_view = FeatureView(
     ],
     online=True,
     source=query_source,
-    tags={"team": "search_quality_mlops"}
+    tags={"team": "search_quality_mlops"},
 )

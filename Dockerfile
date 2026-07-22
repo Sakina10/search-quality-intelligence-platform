@@ -43,15 +43,17 @@ CMD ["bash"]
 FROM base AS serving
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir fastapi uvicorn pydantic pydantic-settings xgboost lightgbm numpy pandas pyarrow psycopg2-binary sqlalchemy
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy only source files needed for serving
+# Copy source files needed for serving
 COPY src/ /app/src/
 COPY configs/ /app/configs/
 COPY models/ /app/models/
 
+ENV PYTHONPATH=.
+
 EXPOSE 8000
-CMD ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.serving.api:app", "--host", "0.0.0.0", "--port", "8000"]
 
 # ==========================================
 # Stage 4: Dashboard Visualization (Production)
@@ -59,11 +61,15 @@ CMD ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
 FROM base AS dashboard
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir streamlit pandas numpy matplotlib seaborn sqlalchemy psycopg2-binary
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy dashboard app code
-COPY dashboards/ /app/dashboards/
-COPY src/config/ /app/src/config/
+# Copy source files needed for dashboard
+COPY src/ /app/src/
+COPY configs/ /app/configs/
+COPY models/ /app/models/
+
+ENV PYTHONPATH=.
 
 EXPOSE 8501
-CMD ["streamlit", "run", "dashboards/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "src/dashboard/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+

@@ -43,7 +43,7 @@ We use a standard branching workflow for all contributions:
    ```
 4. **Run Tests**: Ensure all automated Pytest validation checks pass:
    ```bash
-   PYTHONPATH=. pytest tests/
+   pytest
    ```
 5. **Commit Changes**: Use Conventional Commits formatting:
    ```bash

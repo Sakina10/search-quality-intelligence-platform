@@ -19,7 +19,7 @@ Core Platform    Community DX    Cloud Edition    Enterprise Scale  AI Integrati
 *   **Goal**: Deliver a stable, production-ready analytics and MLOps serving platform.
 *   **Key Capabilities**:
     *   Synthetic search event generator and Great Expectations schema validator.
-    *   DuckDB warehouse ingestion and dbt core dimension/fact modeling.
+    *   PostgreSQL data warehouse ingestion and dbt core dimension/fact modeling.
     *   Feast Feature Store sqlite registry online materialization index.
     *   XGBoost training pipeline with Optuna hyperparameter sweeps.
     *   SHAP explainers, Isolation Forest anomaly classifier, and FastAPI serving endpoints.

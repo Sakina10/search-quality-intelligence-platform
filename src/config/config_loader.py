@@ -16,8 +16,8 @@ class DatabaseSettings(BaseModel):
     host: str = "db"
     port: int = 5432
     name: str = "search_quality"
-    user: str = "postgres_admin"
-    password: str = Field(..., min_length=8)  # Require secure passwords
+    user: str = "postgres"
+    password: str = Field("postgres", description="Database authentication password")
     pool_size: int = 20
     max_overflow: int = 10
 
@@ -76,7 +76,9 @@ def load_yaml_config(file_path: str) -> Dict[str, Any]:
         return config if isinstance(config, dict) else {}
 
 
-def merge_dicts(dict_base: Dict[str, Any], dict_override: Dict[str, Any]) -> Dict[str, Any]:
+def merge_dicts(
+    dict_base: Dict[str, Any], dict_override: Dict[str, Any]
+) -> Dict[str, Any]:
     """Recursively merges dictionary override values into the base dictionary."""
     merged = dict_base.copy()
     for key, value in dict_override.items():
@@ -95,7 +97,7 @@ def merge_env_vars(config: Dict[str, Any], prefix: str = "PLATFORM_") -> Dict[st
     merged = config.copy()
     for env_key, env_val in os.environ.items():
         if env_key.startswith(prefix):
-            key_path = env_key[len(prefix):].lower().split("__")
+            key_path = env_key[len(prefix) :].lower().split("__")
             curr = merged
             for part in key_path[:-1]:
                 if part not in curr:
@@ -128,9 +130,11 @@ def get_settings() -> Settings:
     env = os.getenv("PLATFORM_ENV", "prod").lower()
 
     # 2. Set config file paths
-    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    base_dir = os.path.dirname(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    )
     configs_dir = os.path.join(base_dir, "configs")
-    
+
     base_yaml_path = os.path.join(configs_dir, "base_config.yaml")
     override_yaml_path = os.path.join(configs_dir, f"{env}_config.yaml")
 

@@ -2,15 +2,13 @@
 """Apache Airflow DAG for orchestrating the Google Search Quality Intelligence Platform.
 
 Schedules and monitors:
-1. Daily DW extraction and delta load ingestion (DuckDB).
+1. Daily DW extraction and delta load ingestion (PostgreSQL).
 2. Feast Feature Store rolling metrics computations and materialization.
 3. XGBoost model retraining sweeps and local Promotions registry serialization.
 """
 
 from datetime import datetime, timedelta
-# pyrefly: ignore [missing-import]
 from airflow import DAG
-# pyrefly: ignore [missing-import]
 from airflow.operators.bash import BashOperator
 
 # Default arguments for the pipeline tasks

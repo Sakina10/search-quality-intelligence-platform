@@ -6,15 +6,15 @@ services:
     image: postgres:15-alpine
     container_name: search_quality_db
     environment:
-      POSTGRES_DB: search_quality
-      POSTGRES_USER: postgres_admin
-      POSTGRES_PASSWORD: admin_password_secure_123
+      POSTGRES_DB: ${DB_NAME:-search_quality}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres_admin -d search_quality"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-postgres} -d $${POSTGRES_DB:-search_quality}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -29,9 +29,9 @@ services:
       - ENV=dev
       - DB_HOST=db
       - DB_PORT=5432
-      - DB_NAME=search_quality
-      - DB_USER=postgres_admin
-      - DB_PASSWORD=admin_password_secure_123
+      - DB_NAME=${DB_NAME:-search_quality}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
     ports:
       - "8000:8000"
     depends_on:
@@ -50,9 +50,9 @@ services:
       - ENV=dev
       - DB_HOST=db
       - DB_PORT=5432
-      - DB_NAME=search_quality
-      - DB_USER=postgres_admin
-      - DB_PASSWORD=admin_password_secure_123
+      - DB_NAME=${DB_NAME:-search_quality}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
       - API_URL=http://api:8000
     ports:
       - "8501:8501"

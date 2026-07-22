@@ -7,7 +7,7 @@ def test_config_loader_default(monkeypatch) -> None:
     # Ensure environment matches base default
     monkeypatch.setenv("PLATFORM_ENV", "prod")
     monkeypatch.setenv("PLATFORM_DATABASE__PASSWORD", "secure_prod_password")
-    
+
     config = get_settings()
     assert config.env == "prod"
     assert config.debug is False
@@ -19,7 +19,7 @@ def test_config_environment_overrides(monkeypatch) -> None:
     """Verifies that development overrides are applied correctly when env is set to dev."""
     monkeypatch.setenv("PLATFORM_ENV", "dev")
     monkeypatch.setenv("PLATFORM_DATABASE__PASSWORD", "secure_dev_password")
-    
+
     config = get_settings()
     assert config.env == "dev"
     assert config.debug is True

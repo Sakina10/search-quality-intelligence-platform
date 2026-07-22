@@ -22,7 +22,7 @@
 ```bash
 make lint
 make type-check
-PYTHONPATH=. pytest tests/
+pytest
 ```
 
 ### Manual Verification

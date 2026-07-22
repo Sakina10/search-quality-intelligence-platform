@@ -29,11 +29,13 @@ MANIFEST
 # Jupyter Notebooks
 .ipynb_checkpoints
 
-# Virtual environments
+# Virtual environments and local env
 venv/
 .venv/
 env/
-.env/
+.env
+.env.*
+!.env.example
 ENV/
 
 # IDEs

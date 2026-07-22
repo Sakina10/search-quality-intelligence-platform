@@ -24,16 +24,22 @@ def ensure_directory(path: str) -> None:
 
 def execution_timer(func: Callable[..., Any]) -> Callable[..., Any]:
     """Decorator to measure and log the execution time of code blocks."""
+
     @wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> Any:
         start_time = time.perf_counter()
         try:
             result = func(*args, **kwargs)
             duration = time.perf_counter() - start_time
-            logger.info(f"Function '{func.__name__}' completed execution in {duration:.4f} seconds.")
+            logger.info(
+                f"Function '{func.__name__}' completed execution in {duration:.4f} seconds."
+            )
             return result
         except Exception as e:
             duration = time.perf_counter() - start_time
-            logger.error(f"Function '{func.__name__}' failed after {duration:.4f} seconds with error: {e}")
+            logger.error(
+                f"Function '{func.__name__}' failed after {duration:.4f} seconds with error: {e}"
+            )
             raise
+
     return wrapper

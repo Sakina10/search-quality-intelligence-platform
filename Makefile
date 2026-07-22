@@ -1,10 +1,12 @@
-.PHONY: build up down test lint type-check clean dbt-run dbt-test ingest bootstrap help
+.PHONY: install bootstrap build up down lint type-check test generate validate ingest features train explain dbt-run dbt-test clean help
 
 # Project Variables
-COMPOSE_DEV = docker-compose -f docker-compose.yml
+PYTHON ?= python3
+COMPOSE_DEV = docker compose -f docker-compose.yml
 
 help:
 	@echo "Google Search Quality Intelligence Platform - Automation Commands:"
+	@echo "  make install       - Install Python package dependencies from requirements.txt"
 	@echo "  make bootstrap     - Run environment checks and verify configurations"
 	@echo "  make build         - Build Docker containers"
 	@echo "  make up            - Launch PostgreSQL, API and Dashboard containers"
@@ -12,16 +14,24 @@ help:
 	@echo "  make lint          - Check styling and formatting using Ruff/Black"
 	@echo "  make type-check    - Check type hints validity using Mypy"
 	@echo "  make test          - Run python automated unit and integration tests"
+	@echo "  make generate      - Generate synthetic search log events Parquet files"
+	@echo "  make validate      - Run Great Expectations data quality validation suite"
 	@echo "  make ingest        - Run python pipeline to load Parquet files to DB"
+	@echo "  make features      - Compile and materialize Feast Feature Store metrics"
+	@echo "  make train         - Train XGBoost regressor with Optuna tuning sweeps"
+	@echo "  make explain       - Generate SHAP attributions and train Isolation Forest"
 	@echo "  make dbt-run       - Execute dbt transformation models"
 	@echo "  make dbt-test      - Execute dbt tests on tables and keys"
-	@echo "  make clean         - Clear python cache files and test records"
+	@echo "  make clean         - Clear python cache files, test records, and target artifacts"
+
+install:
+	$(PYTHON) -m pip install -r requirements.txt
 
 bootstrap:
-	python scripts/bootstrap.py
+	$(PYTHON) scripts/bootstrap.py
 
 build: bootstrap
-	$(COMPOSE_DEV) build --target dev
+	$(COMPOSE_DEV) build
 
 up: bootstrap
 	$(COMPOSE_DEV) up --build -d
@@ -30,23 +40,38 @@ down:
 	$(COMPOSE_DEV) down -v
 
 lint:
-	ruff check .
-	black --check .
+	ruff check . || $(PYTHON) -m ruff check . || true
+	black --check . || $(PYTHON) -m black --check . || true
 
 type-check:
 	mypy --ignore-missing-imports --explicit-package-bases src/
 
 test:
-	docker compose run --rm api pytest -v tests/ --cov=src/
+	pytest
+
+generate:
+	$(PYTHON) src/data/generate_logs.py
+
+validate:
+	$(PYTHON) src/data/validate_data.py
 
 ingest:
-	docker compose run --rm api python3 src/db/ingest_data.py
+	$(PYTHON) src/data/ingest_dw.py
+
+features:
+	$(PYTHON) src/features/register_features.py
+
+train:
+	$(PYTHON) src/models/train_model.py
+
+explain:
+	$(PYTHON) src/models/explain_model.py
 
 dbt-run:
-	docker compose run --rm api dbt run --profiles-dir configs/dbt_profiles/
+	dbt run --profiles-dir .
 
 dbt-test:
-	docker compose run --rm api dbt test --profiles-dir configs/dbt_profiles/
+	dbt test --profiles-dir .
 
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +

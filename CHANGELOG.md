@@ -2,9 +2,9 @@
 
 All notable changes to the **Google Search Quality Intelligence Platform** will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2026-07-21
+## [1.0.0] - 2026-07-22
 ### Added
-- Integrated DuckDB ingestion pipelines (`ingest_dw.py`) copying staging records to schemas.
+- Integrated PostgreSQL data warehouse bulk ingestion pipelines (`ingest_dw.py`) with star-schema DDL.
 - Configured dbt Core dimensional mapping (staging and core schemas, SCD type 2 dimensional tables).
 - Materialized offline/online feature views inside Feast Feature Store SQLite database registries.
 - Tuned and fit the XGBoost predictor regressor model using Optuna sweeps.

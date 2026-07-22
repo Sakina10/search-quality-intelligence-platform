@@ -6,21 +6,21 @@ search_quality_profile:
   outputs:
     dev:
       type: postgres
-      host: localhost
-      user: postgres_admin
-      password: admin_password_secure_123
-      port: 5432
-      dbname: search_quality
+      host: "{{ env_var('DB_HOST', 'localhost') }}"
+      user: "{{ env_var('DB_USER', 'postgres') }}"
+      password: "{{ env_var('DB_PASSWORD', 'postgres') }}"
+      port: {{ env_var('DB_PORT', '5432') | int }}
+      dbname: "{{ env_var('DB_NAME', 'search_quality') }}"
       schema: public
       threads: 4
       keepalives_idle: 0
     prod:
       type: postgres
-      host: db
-      user: postgres_admin
-      password: admin_password_secure_123
-      port: 5432
-      dbname: search_quality
+      host: "{{ env_var('DB_HOST') }}"
+      user: "{{ env_var('DB_USER') }}"
+      password: "{{ env_var('DB_PASSWORD') }}"
+      port: {{ env_var('DB_PORT', '5432') | int }}
+      dbname: "{{ env_var('DB_NAME') }}"
       schema: public
       threads: 8
       keepalives_idle: 0

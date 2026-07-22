@@ -1,6 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "google-search-quality-intelligence-platform"
+version = "1.0.0"
+description = "Production-grade analytics and MLOps platform predicting Search Quality Score (SQS) degradation."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Search Quality Platform Team"}
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-v"
+
 [tool.black]
 line-length = 88
-target-version = ["py311"]
+target-version = ["py311", "py312"]
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -78,4 +98,3 @@ ignore_missing_imports = true
 [tool.pyright]
 include = ["src", "tests", "scripts"]
 extraPaths = ["."]
-
