@@ -1,13 +1,9 @@
 # Unit tests for Feature Store aggregations computation logic
-import os
-import sys
 import pandas as pd
-import numpy as np
-import pytest
 
 from src.features.compute_features import (
-    compute_user_aggregates,
     compute_query_aggregates,
+    compute_user_aggregates,
 )
 
 

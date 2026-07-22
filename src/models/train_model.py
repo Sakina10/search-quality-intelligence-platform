@@ -6,23 +6,22 @@ hyperparameter optimization sweeps using Optuna, and trains the final
 XGBoost regressor for Search Quality Score prediction.
 """
 
-import os
-import sys
 import hashlib
+import os
 import pickle
-from typing import Any, Dict, List, Tuple
-import pandas as pd
-import numpy as np
-import xgboost as xgb
+import sys
+from typing import Any, Dict, Tuple
+
 import optuna
-from sklearn.model_selection import train_test_split
+import pandas as pd
+import xgboost as xgb
 from sklearn.metrics import mean_absolute_error, r2_score
+from sklearn.model_selection import train_test_split
 
 # Map import path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, BASE_DIR)
 
-from src.config.config_loader import settings
 from src.utils.logging_setup import logger
 
 

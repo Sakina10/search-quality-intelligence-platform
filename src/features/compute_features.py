@@ -5,17 +5,17 @@ Reads daily search logs, performs rolling aggregates for user and query entities
 and saves the features to Parquet files for Feast ingestion.
 """
 
+import hashlib
 import os
 import sys
-import hashlib
-import pandas as pd
+
 import numpy as np
+import pandas as pd
 
 # Map import path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, BASE_DIR)
 
-from src.config.config_loader import settings
 from src.utils.logging_setup import logger
 
 

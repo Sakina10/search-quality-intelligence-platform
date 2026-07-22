@@ -6,12 +6,13 @@ generates deterministic surrogate keys, and bulk-copies records into
 PostgreSQL using psycopg2 copy_from utility.
 """
 
+import hashlib
+import io
 import os
 import sys
-import io
 import time
-import hashlib
-from typing import Any, Dict, List
+from typing import Any
+
 import pandas as pd
 
 try:
@@ -88,10 +89,6 @@ def copy_dataframe_to_table(conn: Any, df: pd.DataFrame, table_name: str) -> Non
     csv_buffer = io.StringIO()
     df.to_csv(csv_buffer, sep="\t", header=False, index=False, na_rep="\\N")
     csv_buffer.seek(0)
-
-    # Get column names
-    columns = [f'"{col}"' for col in df.columns]
-    columns_str = ", ".join(columns)
 
     with conn.cursor() as cursor:
         cursor.copy_from(

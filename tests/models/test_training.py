@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 
 optuna = pytest.importorskip("optuna")
@@ -6,7 +8,7 @@ from src.models.train_model import load_training_dataset
 
 
 def test_load_training_dataset_fallback() -> None:
-    """Verifies that load_training_dataset handles fallback synthetic dataset generation."""
+    """Verifies that load_training_dataset handles fallback synthetic dataset."""
     with patch("os.path.exists", return_value=False):
         X_train, X_test, y_train, y_test = load_training_dataset()
 

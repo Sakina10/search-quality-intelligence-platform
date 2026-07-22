@@ -6,25 +6,22 @@ time, feeds inputs to the trained XGBoost regressor, and runs unsupervised
 Isolation Forest anomaly detection checks.
 """
 
+import hashlib
 import os
+import pickle
 import sys
 import time
-import hashlib
-import pickle
-import subprocess
+from contextlib import asynccontextmanager
 from typing import Any, AsyncGenerator, Dict, List, Optional
+
 import numpy as np
-import pandas as pd
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-
-from contextlib import asynccontextmanager
 
 # Map import path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, BASE_DIR)
 
-from src.config.config_loader import settings
 from src.utils.logging_setup import logger
 
 # Paths to models

@@ -1,8 +1,9 @@
+import pandas as pd
 import pytest
 
 ge = pytest.importorskip("great_expectations")
 
-from src.data.validate_data import run_ge_validations, generate_summary_report
+from src.data.validate_data import generate_summary_report, run_ge_validations
 
 
 def test_ge_validations_sample_dataframe() -> None:

@@ -2,14 +2,14 @@
 import os
 import sys
 from unittest.mock import MagicMock, patch
+
 import pandas as pd
-import pytest
 
 # Map import path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, BASE_DIR)
 
-from src.data.ingest_dw import generate_surrogate_key, copy_dataframe_to_table
+from src.data.ingest_dw import copy_dataframe_to_table, generate_surrogate_key
 
 
 def test_generate_surrogate_key() -> None:

@@ -8,21 +8,20 @@ ranges, and metric bounds on generated Parquet datasets.
 import json
 import os
 import sys
-import time
 
 # Disable Great Expectations telemetry to avoid exit latency / network hangs
 os.environ["GX_ANALYTICS_ENABLED"] = "False"
 os.environ["GE_USAGE_STATS"] = "False"
 
-from typing import Any, Dict, List
-import pandas as pd
+from typing import Any, Dict
+
 import great_expectations as ge
+import pandas as pd
 
 # Map import path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, BASE_DIR)
 
-from src.config.config_loader import settings
 from src.utils.logging_setup import logger
 
 

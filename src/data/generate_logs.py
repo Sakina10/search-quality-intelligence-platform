@@ -1,11 +1,10 @@
 import os
-import sys
-
 import random
 import shutil
 import time
 from datetime import datetime, timedelta
 from typing import Any, Dict, List
+
 import numpy as np
 import pandas as pd
 from faker import Faker

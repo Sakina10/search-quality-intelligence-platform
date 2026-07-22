@@ -6,14 +6,15 @@ trains an Isolation Forest model for multi-dimensional anomaly flagging,
 and serializes active deployment metadata into the promotions registry index.
 """
 
-import os
-import sys
 import json
+import os
 import pickle
+import sys
 from datetime import datetime
 from typing import Any, Dict, List
-import pandas as pd
+
 import numpy as np
+import pandas as pd
 import shap
 from sklearn.ensemble import IsolationForest
 
@@ -84,7 +85,9 @@ def generate_shap_attributions(model: Any, X: pd.DataFrame) -> Dict[str, float]:
 
     # Compute mean absolute SHAP for each column
     mean_shap = np.abs(shap_values).mean(axis=0)
-    importances = {col: float(val) for col, val in zip(X.columns, mean_shap)}
+    importances = {
+        col: float(val) for col, val in zip(X.columns, mean_shap, strict=True)
+    }
 
     # Sort by importance
     sorted_importances = dict(

@@ -6,17 +6,17 @@ inference playground with FastAPI fallback, Feast feature view metrics,
 and SHAP model interpretability profiles.
 """
 
-import os
-import sys
 import json
+import os
 import pickle
-import subprocess
-import requests  # type: ignore
-from typing import Dict, Any, List
-import pandas as pd
+import sys
+from typing import Any, Dict
+
 import numpy as np
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import requests  # type: ignore
 import streamlit as st
 
 # Map import path

@@ -10,6 +10,7 @@ import json
 import os
 import sys
 import time
+
 import psutil
 
 # Map import path
@@ -103,15 +104,15 @@ def main() -> None:
     rows_list = [s["rows"] for s in steps_data]
 
     # Simple linear slope: sum(x*y) / sum(x^2)
-    slope_time_per_row = sum(r * d for r, d in zip(rows_list, durations)) / sum(
-        r * r for r in rows_list
-    )
+    slope_time_per_row = sum(
+        r * d for r, d in zip(rows_list, durations, strict=True)
+    ) / sum(r * r for r in rows_list)
 
     # Disk space slope: Disk ~ Coefficient * Rows
     disk_sizes = [s["disk_size_mb"] for s in steps_data]
-    slope_disk_per_row = sum(r * k for r, k in zip(rows_list, disk_sizes)) / sum(
-        r * r for r in rows_list
-    )
+    slope_disk_per_row = sum(
+        r * k for r, k in zip(rows_list, disk_sizes, strict=True)
+    ) / sum(r * r for r in rows_list)
 
     # Memory profile model
     # Because of day-by-day partitioning chunking, RAM growth should be O(1) flat.

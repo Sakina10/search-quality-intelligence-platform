@@ -1,5 +1,6 @@
 import os
 from typing import Any, Dict
+
 import yaml  # type: ignore
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict

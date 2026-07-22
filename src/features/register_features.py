@@ -6,12 +6,12 @@ materializes features, and validates low-latency online retrieval.
 """
 
 import os
-import sys
-import shutil
-import time
 import subprocess
+import sys
+import time
 from datetime import datetime
-from typing import Any, Optional
+from typing import Optional
+
 import pandas as pd
 
 # Map import path

@@ -2,6 +2,7 @@
 # MLOps Layer definitions
 
 from datetime import timedelta
+
 from feast import (
     Entity,
     FeatureView,

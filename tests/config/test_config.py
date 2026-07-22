@@ -1,4 +1,3 @@
-import os
 from src.config.config_loader import get_settings
 
 

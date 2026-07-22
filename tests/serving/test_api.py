@@ -8,6 +8,7 @@ and unsupervised Isolation Forest anomaly detection scoring.
 import os
 import sys
 import unittest
+
 from fastapi.testclient import TestClient
 
 # Map import path

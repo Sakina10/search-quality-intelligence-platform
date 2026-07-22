@@ -1,6 +1,8 @@
 import os
+
 import pytest
-from src.utils.exceptions import SearchQualityBaseError, ConfigurationError
+
+from src.utils.exceptions import ConfigurationError, SearchQualityBaseError
 from src.utils.helpers import ensure_directory, execution_timer
 from src.utils.logging_setup import logger
 
