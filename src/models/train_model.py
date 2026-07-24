@@ -43,11 +43,15 @@ def load_training_dataset() -> Tuple[
 
         df = pd.DataFrame(
             {
-                "clicks": [1, 0, 1, 0],
-                "impressions": [1, 1, 1, 1],
+                "user_7d_ctr": [0.45, 0.33, 0.52, 0.40],
+                "user_30d_avg_dwell_time": [82.1, 75.4, 90.0, 81.6],
+                "user_pogo_sticking_count": [1, 2, 0, 1],
+                "query_avg_ctr": [0.41, 0.35, 0.48, 0.39],
+                "query_95p_latency_ms": [210.0, 180.0, 240.0, 190.0],
+                "query_reformulation_rate": [0.12, 0.18, 0.09, 0.14],
                 "latency_ms": [120.0, 85.0, 200.0, 95.0],
-                "bounce_rate": [0.20, 0.55, 0.10, 0.35],
                 "page_speed_score": [90.0, 82.0, 75.0, 88.0],
+                "bounce_rate": [0.20, 0.55, 0.10, 0.35],
                 "position": [1, 3, 2, 5],
                 "search_quality_score": [95.0, 70.0, 90.0, 80.0],
             }
