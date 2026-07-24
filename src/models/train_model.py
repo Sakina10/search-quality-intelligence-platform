@@ -10,7 +10,7 @@ import hashlib
 import os
 import pickle
 import sys
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Tuple, cast
 
 import optuna
 import pandas as pd
@@ -41,27 +41,30 @@ def load_training_dataset() -> Tuple[
             "Using synthetic fallback dataset."
         )
 
-        df = pd.DataFrame(
-            {
-                "clicks": [1, 0, 1, 0],
-                "impressions": [1, 1, 1, 1],
-                "latency_ms": [120.0, 85.0, 200.0, 95.0],
-                "bounce_rate": [0.20, 0.55, 0.10, 0.35],
-                "page_speed_score": [90.0, 82.0, 75.0, 88.0],
-                "position": [1, 3, 2, 5],
-                "search_quality_score": [95.0, 70.0, 90.0, 80.0],
-            }
-        )
+    df = pd.DataFrame(
+        {
+            "clicks": [1, 0, 1, 0],
+            "impressions": [1, 1, 1, 1],
+            "latency_ms": [120.0, 85.0, 200.0, 95.0],
+            "bounce_rate": [0.20, 0.55, 0.10, 0.35],
+            "page_speed_score": [90.0, 82.0, 75.0, 88.0],
+            "position": [1, 3, 2, 5],
+            "search_quality_score": [95.0, 70.0, 90.0, 80.0],
+        }
+    )
 
-        X = df.drop(columns=["search_quality_score"])
-        y = df["search_quality_score"]
+    X = df.drop(columns=["search_quality_score"])
+    y = df["search_quality_score"]
 
-        return train_test_split(
+    return cast(
+        Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series],
+        train_test_split(
             X,
             y,
             test_size=0.25,
             random_state=42,
-        )
+        ),
+    )
 
     logger.info("Loading search log events for ML training...")
     df_raw = pd.read_parquet(data_dir)
@@ -154,11 +157,14 @@ def load_training_dataset() -> Tuple[
     X = training_matrix[feature_cols].copy()
     y = training_matrix["search_quality_score"].copy()
 
-    return train_test_split(
-        X,
-        y,
-        test_size=0.20,
-        random_state=42,
+    return cast(
+        Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series],
+        train_test_split(
+            X,
+            y,
+            test_size=0.20,
+            random_state=42,
+        ),
     )
 
 
