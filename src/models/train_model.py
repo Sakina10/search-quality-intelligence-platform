@@ -223,7 +223,7 @@ def main() -> None:
     # Write feature column metadata for downstream consistency
     meta_path = os.path.join(models_dir, "feature_metadata.pkl")
     with open(meta_path, "wb") as f:
-        pickle.dump(list(X.columns), f)
+        pickle.dump(list(X_train.columns), f)
 
     logger.info("ML training pipeline execution completed successfully.")
 
