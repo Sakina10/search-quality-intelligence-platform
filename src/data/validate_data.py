@@ -38,10 +38,10 @@ def load_partitioned_dataset(data_dir: str) -> pd.DataFrame:
         return df
     except Exception as e:
         logger.error(f"Failed to load Parquet files: {e}")
-        raise e
+        raise 
 
 
-def run_validation_suite(df: pd.DataFrame) -> Dict[str, Any]:
+def def run_ge_validations(df: pd.DataFrame) -> Dict[str, Any]:
     """Wraps DataFrame and executes Great Expectations validations suite checks."""
     logger.info("Initializing Great Expectations validation suite...")
     ge_df = ge.from_pandas(df)
@@ -133,7 +133,7 @@ def main() -> None:
         df = load_partitioned_dataset(data_dir)
 
         # Run validations
-        results = run_validation_suite(df)
+        results = run_ge_validations(df)
 
         # Format metrics report
         format_results_report(results)
@@ -156,7 +156,23 @@ def main() -> None:
     except Exception as e:
         logger.error(f"Error during validation process run: {e}")
         sys.exit(1)
+        
+def generate_summary_report(
+    results: Dict[str, Any],
+    total_rows: int,
+) -> Dict[str, Any]:
+    """Generate a JSON-friendly summary of validation results."""
 
+    stats = results.get("statistics", {})
+
+    return {
+        "validation_success": results.get("success", False),
+        "total_records_validated": total_rows,
+        "evaluated_expectations": stats.get("evaluated_expectations", 0),
+        "successful_expectations": stats.get("successful_expectations", 0),
+        "unsuccessful_expectations": stats.get("unsuccessful_expectations", 0),
+        "success_percent": stats.get("success_percent", 0.0),
+    }
 
 if __name__ == "__main__":
     main()
